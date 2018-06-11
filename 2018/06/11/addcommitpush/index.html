@@ -1,0 +1,64 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="git三步合一"><meta name="keywords" content="小技巧"><meta name="author" content="rua!,undefined"><meta name="copyright" content="rua!"><title>git三步合一 | 自留地</title><link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="https://cdn.bootcss.com/reveal.js/3.6.0/css/reveal.min.css"><link rel="stylesheet" href="https://cdn.bootcss.com/reveal.js/3.6.0/css/theme/black.min.css"><link rel="stylesheet" href="https://cdn.bootcss.com/reveal.js/3.6.0/lib/css/zenburn.min.css"></head><body><div class="reveal"><div class="slides"><section data-markdown data-separator="===" data-separator-vertical="==" data-charset="utf-8"><script type="text/template">
+
+
+每次写完都要 git add -a，git commit -m "balabala", git push 三步走，非常麻烦，于是查了下能否合并成一步，在Windows下可以如下操作：
+
+===
+
+1. 管理员模式打开 git bush ,输入
+
+   ``` bash
+   vim /etc/git-completion.bash
+   ```
+   ==
+
+2. 在打开的文件内新增如下内容：
+
+
+   ``` bash
+function g() {
+	log=$1 files=$2
+	if [ ! -n "$files" ]; then
+		files="."
+	fi
+	git add "$2"
+	git commit -m "$1"
+	git push
+}
+   ```
+
+   ==
+
+3. ctrl+c 退出编辑模式，:wq 保存退出，输入``source  /etc/git-completion.bash``
+
+   新命令添加完成，
+
+4. 使用方法（限管理员模式下）
+
+   ```bash
+   g "commit说明"  . //add -a
+   g "commit说明"  /source/_post/xxx.md  //add单个文件
+   ```</script></section></div></div><script src="/js/third-party/reveal/head.min.js"></script><script src="/js/third-party/reveal/reveal.min.js"></script><script>Reveal.initialize({
+  mouseWheel: false,
+  transition: 'slide',
+  transitionSpeed: 'default',
+  parallaxBackgroundImage: '',
+  parallaxBackgroundSize: '',
+  parallaxBackgroundHorizontal: '',
+  parallaxBackgroundVertical: '',
+  markdown: {
+    smartypants: true
+  },
+  dependencies: [
+    { src: '/js/third-party/reveal/marked.min.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+    { src: '/js/third-party/reveal/markdown.min.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+    // Syntax highlight for <code> elements
+    { src: '/js/third-party/reveal/highlight.min.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+    // Zoom in and out with Alt+click
+    { src: '/js/third-party/reveal/zoom.min.js', async: true },
+    // Speaker notes
+    { src: '/js/third-party/reveal/notes.min.js', async: true },
+    // MathJax
+    { src: '/js/third-party/reveal/math.min.js', async: true }
+  ]
+});</script></body></html>
